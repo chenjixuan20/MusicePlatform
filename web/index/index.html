@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>带音乐平台</title>
+
+    <!-- VUE -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- 引入axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="nav">
+            <el-menu :default-active="menu_active_index" mode="horizontal" @select="" text-color="#ffffff"
+                background-color="#333" active-text-color="#ffffff">
+                <div class="nav-content">
+                    <div class="nav-logo">
+                        <img src="../img/ichuan.png" alt="" style="width: 60px;height: 60px;">
+                        <a href="../index/index.html">&nbsp;带音乐平台</a>
+                    </div>
+
+                    <el-menu-item index="1" class="nav-item">发现音乐</el-menu-item>
+                    <el-menu-item index="2" class="nav-item">我的音乐</el-menu-item>
+                    <el-menu-item index="3" class="nav-item" disabled>朋友</el-menu-item>
+                    <el-menu-item index="4" class="nav-item" disabled>商城</el-menu-item>
+                    <el-menu-item index="5" class="nav-item" disabled>音乐人 </el-menu-item>
+                    <el-menu-item index="6" class="nav-item" disabled>下载客户端</el-menu-item>
+                    <el-input class="search"
+                              placeholder="搜索"
+                              v-on:keyup.enter.native="search"
+                              prefix-icon="el-icon-search"
+                              v-model="search_wd"size="medium">
+                    </el-input>
+                    <div class="log">
+                        <div class="user" v-if="user!=null">
+                            <img v-bind:src="user.img_url" style="height: 30px;width: 30px;border-radius: 15px;margin-right: 10px" alt="icon" >
+                            <el-dropdown @command="handleCommand">
+                                <span class="el-dropdown-link" style="color: #ffffff;">
+                                {{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item command="homepage">我的主页</el-dropdown-item>
+                                    <el-dropdown-item disabled>我的消息</el-dropdown-item>
+                                    <el-dropdown-item disabled>个人设置</el-dropdown-item>
+                                    <el-dropdown-item divided command="logout"><i class="el-icon-delete"></i> 登出 </el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                        <div class="log-or-register" v-else>
+                            <a href="#" @click="loginFormVisible = true">登录</a>
+                            <a href="#" @click="registerFormVisible = true">注册</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!--login Form -->
+                <el-dialog title="登录" :visible.sync="loginFormVisible" width="320px" >
+                    <el-form :model="login_form">
+                        <el-form-item >
+                            <el-input placeholder="账号" v-model="login_form.account" auto-complete="off" suffix-icon="el-icon-success"></el-input>
+                        </el-form-item>
+                        <el-form-item >
+                            <el-input placeholder="密码" v-model="login_form.password" type="password" auto-complete="off" suffix-icon="el-icon-success
+"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <div class="forget-password">
+                            <a href="#">忘记密码？</a>
+                        </div>
+                        <el-button class="login-button" type="primary" @click="login">登录</el-button>
+                        <div >
+                            <a href="#" class="to-register" @click="toRegisterORLogin('Register')">注册</a>
+                        </div>
+                    </div>
+                </el-dialog>
+                <!--register Form -->
+                <el-dialog title="注册" :visible.sync="registerFormVisible" width="360px" v-loading="true">
+                    <el-form :model="register_form">
+                        <el-form-item >
+                            <el-input placeholder="账号" v-model="register_form.account" auto-complete="off" suffix-icon="el-icon-success"></el-input>
+                        </el-form-item>
+                        <el-form-item >
+                            <el-input placeholder="密码" v-model="register_form.password" type="password" auto-complete="off" suffix-icon="el-icon-success
+"></el-input>
+                        </el-form-item>
+                        <el-form-item >
+                            <el-input placeholder="再输一次密码" v-model="register_form.password_repeat" type="password" auto-complete="off" suffix-icon="el-icon-success
+"></el-input>
+                        </el-form-item>
+                        <el-form-item >
+                            <el-input placeholder="验证码" disabled v-model="register_form.verification_code" auto-complete="off" suffix-icon="el-icon-success"></el-input>
+                        </el-form-item>
+
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <div class="verification-code">
+                            <a href="#">发送验证码</a>
+                        </div>
+                        <el-button class="register-button" type="primary" @click="register">注册</el-button>
+                        <div>
+                            <a href="#" class="to-login" @click="toRegisterORLogin('Login')">登录</a>
+                        </div>
+                    </div>
+                </el-dialog>
+
+            </el-menu>
+        </div>
+        <div class="carousel-wrap">
+            <div class="carousel">
+                <el-carousel type="card" height="336px">
+                    <el-carousel-item v-for="item in carousel_items" >
+                        <img class="carousel-img" v-bind:src="item.image_url" alt="" srcset="">
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+        </div>
+
+        <div class="main-wrap">
+            <div class="main">
+                <div class="hot-playlist">
+                    <div class="hot-title">
+                        <h2><i class="el-icon-caret-right"></i> 热门歌单</h2>
+                    </div>
+                    <div class="hot-content">
+                        <div class="playlist-item" v-for="item in hot_playlist">
+                            <el-card body-style="padding:8px">
+                                <img v-bind:src="item.img_url" class="playlist-item-img">
+                                <div>
+                                    <div class="item-title"><a v-bind:href="'../detail/detail.html?type=playlist&id='+item.id">{{fomatString(item.title,17)}}</a></div>
+                                    <div>
+                                        <div class="item-time">{{item.create_date}}</div>
+                                        <!--<div class="btn-list">-->
+                                            <!--<el-button size="small" icon="el-icon-caret-right" circle></el-button>-->
+                                            <!--<el-button size="small" icon="el-icon-star-off" circle></el-button>-->
+                                        <!--</div>-->
+
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div>
+                    </div>
+                </div>
+                <div class="hot-album">
+                    <div class="hot-title">
+                        <h2><i class="el-icon-caret-right"></i> 热门专辑</h2>
+                    </div>
+                    <div class="hot-content">
+                        <div class="albumlist-item" v-for="item in hot_albumlist">
+                            <el-card body-style="padding:8px;">
+                                <img v-bind:src="item.img_url" class="albumlist-item-img">
+                                <img class="album-after-img" src="../img/album.png" alt="">
+                                <div albumlist-item-info>
+                                    <div class="item-title">
+                                        <a v-bind:href="'../detail/detail.html?type=album&id='+item.id">
+                                            {{fomatString(item.title,12)}}
+                                        </a>
+
+                                    </div>
+                                    <div class="item-singer">
+                                        <a v-bind:href="'../singerDetail/singerDetail.html?id='+item.singer.id">
+                                            {{fomatString(item.singer.name,12)}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aside">
+                <div class="hot-singer">
+                    <h4><i class="el-icon-arrow-right"></i>歌手排行榜</h4>
+                    <div class="hot-singer-content">
+                        <div class="singer-item" v-for="singer in hot_singer">
+                            <div class="singer-img">
+                                <img v-bind:src="singer.img_url" style="width: 62px;height: 62px;" alt="">
+                            </div>
+                            <div class="singer-info-wrap">
+                                <div class="singer-name"><a v-bind:href="'../singerDetail/singerDetail.html?id='+singer.id">{{singer.name}}</a></div>
+                                <div class="singer-info">{{fomatString(singer.info,14)}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="hot-singer">
+                    <h4><i class="el-icon-arrow-right"></i>歌曲排行榜</h4>
+                    <div class="hot-singer-content">
+                        <div class="singer-item" v-for="song in hot_song">
+                            <div class="singer-img">
+                                <img v-bind:src="song.img_url" style="width: 62px;height: 62px;" alt="">
+                            </div>
+                            <div class="singer-info-wrap">
+                                <div class="singer-name"><a v-bind:href="'../musicDetail/musicDetail.html?id='+song.id">{{song.title}}</a></div>
+                                <div class="singer-info">{{fomatString(song.singer,16)}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-link"> 加入我们 | 支持我们 | 客户服务 | 服务条款 | 网站导航 | 意见反馈 </div>
+            <div>©2018 带音乐平台</div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript" src="./index.js"></script>
+</body>
+
+</html>

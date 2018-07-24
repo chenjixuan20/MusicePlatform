@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>歌手详情</title>
+    <!--引入musicplay.css-->
+    <link rel="stylesheet" href="./singerDetail.css">
+
+    <!--引入vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- 引入axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="nav">
+        <el-menu :default-active="menu_active_index" mode="horizontal" @select="" text-color="#ffffff"
+                 background-color="#333" active-text-color="#ffffff">
+            <div class="nav-content">
+                <div class="nav-logo">
+                    <a href="../index/index.html">带音乐平台</a>
+                </div>
+
+                <el-menu-item index="1" class="nav-item">发现音乐</el-menu-item>
+                <el-menu-item index="2" class="nav-item">我的音乐</el-menu-item>
+                <el-menu-item index="3" class="nav-item" disabled>朋友</el-menu-item>
+                <el-menu-item index="4" class="nav-item" disabled>商城</el-menu-item>
+                <el-menu-item index="5" class="nav-item" disabled>音乐人</el-menu-item>
+                <el-menu-item index="6" class="nav-item" disabled>下载客户端</el-menu-item>
+                <el-input class="search"
+                          placeholder="搜索"
+                          v-on:keyup.enter.native="search"
+                          prefix-icon="el-icon-search"
+                          v-model="search_wd" size="medium">
+                </el-input>
+                <div class="log">
+                    <div class="user" v-if="user!=null">
+                        <img v-bind:src="user.img_url"
+                             style="height: 30px;width: 30px;border-radius: 15px;margin-right: 10px" alt="icon">
+                        <el-dropdown @command="handleCommand">
+                                <span class="el-dropdown-link" style="color: #ffffff;">
+                                {{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="homepage">我的主页</el-dropdown-item>
+                                <el-dropdown-item disabled>我的消息</el-dropdown-item>
+                                <el-dropdown-item disabled>个人设置</el-dropdown-item>
+                                <el-dropdown-item divided command="logout"><i class="el-icon-delete"></i> 登出
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                    <div class="log-or-register" v-else>
+                        <a href="#" @click="loginFormVisible = true">登录</a>
+                        <a href="#" @click="registerFormVisible = true">注册</a>
+                    </div>
+
+                </div>
+            </div>
+            <!--login Form -->
+            <el-dialog title="登录" :visible.sync="loginFormVisible" width="320px">
+                <el-form :model="login_form">
+                    <el-form-item>
+                        <el-input placeholder="账号" v-model="login_form.account" auto-complete="off"
+                                  suffix-icon="el-icon-success"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-input placeholder="密码" v-model="login_form.password" type="password" auto-complete="off"
+                                  suffix-icon="el-icon-success
+"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <div class="forget-password">
+                        <a href="#">忘记密码？</a>
+                    </div>
+                    <el-button class="login-button" type="primary" @click="login">登录</el-button>
+                    <div>
+                        <a href="#" class="to-register" @click="toRegisterORLogin('Register')">注册</a>
+                    </div>
+                </div>
+            </el-dialog>
+            <!--register Form -->
+            <el-dialog title="注册" :visible.sync="registerFormVisible" width="360px" v-loading="true">
+                <el-form :model="register_form">
+                    <el-form-item>
+                        <el-input placeholder="账号" v-model="register_form.account" auto-complete="off"
+                                  suffix-icon="el-icon-success"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-input placeholder="密码" v-model="register_form.password" type="password" auto-complete="off"
+                                  suffix-icon="el-icon-success
+"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-input placeholder="再输一次密码" v-model="register_form.password_repeat" type="password"
+                                  auto-complete="off" suffix-icon="el-icon-success
+"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-input placeholder="验证码" v-model="register_form.verification_code" auto-complete="off"
+                                  suffix-icon="el-icon-success"></el-input>
+                    </el-form-item>
+
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <div class="verification-code">
+                        <a href="#">发送验证码</a>
+                    </div>
+                    <el-button class="register-button" type="primary" @click="register">注册</el-button>
+                    <div>
+                        <a href="#" class="to-login" @click="toRegisterORLogin('Login')">登录</a>
+                    </div>
+                </div>
+            </el-dialog>
+
+        </el-menu>
+    </div>
+
+    <div class="main_wrap">
+        <div class="singer_info_bg">
+            <div class="singer_info">
+                <h2 class="singer_info_name">{{singer.name}}</h2>
+                <img class="singer_info_pic" v-bind:src="singer.img_url" alt="歌手照片">
+                <div class="tab">
+                    <el-tabs type="border-card" stretch @tab-click="tabClick">
+                        <el-tab-pane label="艺人介绍">
+                            <h2 class="singer_introduction">
+                                <i></i> {{singer.name}}简介
+                            </h2>
+                            <p class="singer_intorduction_content">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{singer.intorduction}}
+                            </p>
+                            <h2 class="singer_ablum_content">
+                                <i></i>音乐专辑
+                            </h2>
+                            <ul class="ablumlist">
+                                <li v-for="ablum in albumlist">{{ablum.title}}&nbsp;&nbsp; [ {{ablum.publish_time}} ]
+                                </li>
+                            </ul>
+                        </el-tab-pane>
+                        <el-tab-pane>
+                            <span slot="label"><i class="el-icon-caret-right"></i>  热门作品</span>
+                            <div class="user_btn">
+                                <el-button type="primary" icon="el-icon-caret-right">播放</el-button>
+                                <el-button type="primary" class="el-icon-circle-plus-outline"> 收藏Top{{play_list_num}}
+                                </el-button>
+                            </div>
+
+                        </el-tab-pane>
+                        <el-tab-pane label="所有专辑">
+                            <div class="s-albumlist">
+                                <div class="album-item" v-for="album in albumlist">
+                                    <el-card :body-style="{ padding: '8px' }">
+                                        <a v-bind:href="album.album_url" title="专辑图片">
+                                            <img v-bind:src="album.img_url" style="height: 130px;width: 130px;">
+                                        </a>
+                                        <img src="../img/album.png" style="height: 130px;width: 23px;margin-left: -5px"
+                                             alt="">
+                                        <div class="album-info">
+                                            <div class="album-an">
+                                                <a v-bind:href="album.album_url">{{fomatString(album.title,16)}}</a>
+                                            </div>
+                                            <div class="album-sn">
+                                                <p>{{album.publish_time}}</p>
+                                            </div>
+                                        </div>
+                                    </el-card>
+                                </div>
+                            </div>
+                        </el-tab-pane>
+
+                    </el-tabs>
+                </div>   <!--class=table结束-->
+            </div>
+            <div class="other_details">
+                <div class="other_singers">
+                    <h3 class="other_title">猜你喜欢</h3>
+                    <hr>
+                    <div class="other_singers_box">
+                        <div class="other_singers_info" v-for="info in other_singers">
+                            <img v-bind:src="info.pic_src" alt="歌手照片" width="50px">
+                            <h6 style="font-weight:lighter; color: #666;">{{info.name}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="footer">
+    <div class="footer-link"> 加入我们 | 支持我们 | 客户服务 | 服务条款 | 网站导航 | 意见反馈</div>
+    <div>©2018 带音乐平台</div>
+</div>
+<script src="singerDetail.js" type="text/javascript"></script>
+</body>
+</html>

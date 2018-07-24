@@ -1,0 +1,437 @@
+html {
+    height: 100%;
+    font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.g-wrap0 {
+    width: 995px;
+    display: block;
+    margin: auto;
+    background: #fff;
+}
+
+.g-wrap0_1 {
+    border-right: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    display: inline-block;
+    width: 769px;
+}
+
+.g-wrap1 {
+    display: inline-block;
+    width: 661px;
+    /*background: #fff;*/
+    /*background: aqua;*/
+    padding: 47px 69px 40px 39px;
+}
+
+.g-wrap2 {
+    display: block;
+    float: right;
+    /* border-left: 1px solid black ;*/
+    width: 205px;
+    padding: 10px 10px;
+    height: 890px;
+    /*background: chartreuse;*/
+}
+
+.play-content {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    width: 640px;
+    height: 500px;
+    /*background-color: coral;*/
+}
+
+.play-content .play-cover {
+    position: relative;
+    padding-top: 34px;
+    margin-left: 34px;
+    margin-right: 34px;
+    margin-bottom: 34px;
+}
+
+.play-cover .cover-msk {
+    position: absolute;
+    width: 206px;
+    height: 205px;
+    top: -4px;
+    left: -38px;
+    /*background: black;*/
+    background: url(https://s2.music.126.net/style/web2/img/coverall.png?bfee3c9ed1a926417aede8b079065b09) no-repeat -140px -580px;
+}
+
+.song-info-hd i {
+    display: inline-block;
+    margin-top: 7px;
+    width: 54px;
+    height: 24px;
+    background: url("https://s2.music.126.net/style/web2/img/icon.png?f7123f299273f0b537c0717b96e0650c") no-repeat 0 -463px;
+
+}
+
+.song-info-hd-f {
+    position: relative;
+    top: -5px;
+    display: inline-block;
+    font-weight: normal;
+}
+
+.song-info-singer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #999;
+}
+
+/*————————————播放组件——————-----------------*/
+.play_bar_wrap {
+    width: 414px;
+    margin: 10px auto;
+}
+
+/*------comments(评论)-----------*/
+.songs-title > h3 {
+    border-bottom: 2px solid #c20c0c;
+    padding: 10px 0;
+    margin-right: 20px;
+    margin-top: 18.72px;
+    margin-bottom: 18.72px;
+}
+
+.comments_content {
+    width: 730px;
+    margin-left: 39px;
+}
+
+.comment-user-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.comment-body {
+
+}
+
+.comment-body-new {
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.comment-input {
+    margin: 0 20px;
+    flex: 1;
+}
+
+.comment-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-comment-btnlist {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.new-comment-len {
+    font-size: 13px;
+    color: #999;
+    padding: 0 5px;
+}
+
+.new-comment-btn {
+
+}
+
+.comment-item {
+    display: flex;
+    margin: 0px 20px 0px 0;
+    padding: 20px 20px 20px 0;
+    border-top: 1px dashed #d3d3d3;
+}
+
+.comment-info-wrap {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.comment-user-name {
+    font-size: 14px;
+    color: #c20c0c;
+
+}
+
+.comment-content {
+    color: #333;
+    font-size: 12px;
+    padding: 5px 0 0 0;
+}
+
+.comment-item-time, .comment-item-likes {
+    font-size: 12px;
+    color: #999;
+}
+
+.comment-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0 5px 0;
+}
+
+.comment-input textarea {
+    resize: none;
+}
+
+/*-------g-wrap2-aside-------*/
+.aside-title {
+    border-bottom: 1px solid #c20c0c;
+}
+
+.aside-title > h4 {
+    margin: 10px 0;
+}
+
+/*fan*/
+.fans {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0 80px 0;
+}
+
+.fan-item {
+    padding: 5px;
+}
+
+/*footer*/
+.footer {
+    color: #999;
+    margin: 80px 250px 30px 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid #d3d3d3;
+}
+
+.footer-link {
+    margin: 20px 0 10px 0;
+
+}
+
+/***************************************************歌词滚动表*/
+.play-content {
+
+}
+
+.lyric_text {
+    overflow: hidden;
+}
+
+.lyric_text p {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #625959;
+    text-align: center;
+    height: 24px;
+    line-height: 18px;
+    font-size: 14px;
+}
+
+.lrc-red{
+    color: #c20c0c !important;
+    font-size: 18px!important;
+}
+
+#lyric_content {
+    position: relative;
+    top: 0px;
+}
+
+/*.play_btn ul {*/
+/*display: inline-block;*/
+
+/*height: 30px;*/
+/*width: 100px;*/
+/*list-style: none;*/
+/*background-color: #353434;*/
+/*}*/
+/*.play_btn ul li{*/
+/*display: inline-block;*/
+
+/*}*/
+/*.play_btn ul .btn1 {*/
+/*margin-bottom: 5px;*/
+/*background: #353434 url("../picture/playbar.png") no-repeat;*/
+/*background-position: 0px -29px;*/
+/*width: 20px;*/
+/*height: 20px;*/
+
+/*}*/
+/*.play_btn ul .btn2{*/
+/*background: #353434 url("../picture/playbar.png") no-repeat;*/
+/*background-position: 0px 1px;*/
+/*width: 21px;*/
+/*height: 29px;*/
+/*margin-left: 10px;*/
+/*}*/
+/*.play_btn ul .btn3{*/
+/*margin-bottom: 5px;*/
+/*margin-left: 10px;*/
+/*background: #353434 url("../picture/playbar.png") no-repeat;*/
+/*background-position: 0px -52px;*/
+/*width: 20px;*/
+/*height: 20px;*/
+/*}*/
+/* ----------------------- nav ---------------------- */
+.nav{
+    width: 100%;
+    height: 70px;
+}
+.nav-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-logo{
+    width: 160px;
+    display: flex;
+    align-items: center;
+}
+.nav-logo>a{
+    font-size: 24px;
+    color: white;
+}
+.nav-logo>a:hover{
+    text-decoration: none;
+}
+.nav-item{
+    font-size: 14px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box
+}
+
+.el-menu-item.is-active {
+    border-bottom: 3px solid #c20c0c!important;
+    background-color: rgb(41, 41, 41)!important;
+}
+.search{
+    color: white!important;
+    width: 200px!important;
+    margin-left: 30px;
+}
+.search input{
+    border-radius: 20px;
+
+}
+.search input:focus{
+    border-color: transparent;
+
+}
+.log{
+    margin: 0 10px 0 10px;
+    width: 120px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.log-or-register{
+
+}
+.log-or-register>a{
+    color: #787878;
+    text-decoration: none;
+}
+.log-or-register>a:hover{
+    color: #666;
+    text-decoration: underline;
+}
+/* ----------------------- login ---------------------- */
+.user{
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.el-dialog__header{
+
+}
+.el-dialog__body{
+    border-top:1px solid #c20c0c;
+    padding: 30px 0 0 0;
+    margin: 0 20px;
+}
+.login-button,.register-button{
+    background-color: #bc070c;
+    border: none;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.login-button{
+    width: 280px;
+}
+.register-button{
+    width: 320px;
+}
+.to-register,.to-login{
+    color: #c20c0c;
+    text-decoration: none;
+
+}
+.to-register:hover,.to-login:hover{
+    text-decoration: underline;
+}
+.dialog-footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-button:hover,.register-button:hover{
+    background-color: #ec2a32;
+    border: none;
+}
+.login-button:focus,.register-button:focus{
+    background-color: #c20c0c;
+    border-color: #c20c0c;
+}
+.el-form-item__content input:focus{
+    border-color: #c20c0c;
+}
+.forget-password,.verification-code{
+    align-self:flex-end ;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.forget-password>a,.verification-code>a{
+    color: #c20c0c;
+    text-decoration: none;
+}
+.forget-password:hover,.verification-code:hover{
+    text-decoration: underline;
+}
+
+.rotate{
+    animation:circle 5s linear infinite !important;
+}
+
+@keyframes circle{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+}
+
+
+

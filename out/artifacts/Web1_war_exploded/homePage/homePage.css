@@ -1,0 +1,202 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+#app{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+.main{
+    width: 982px;
+    padding: 40px;
+    border-left: 1px solid #d3d3d3;
+    border-right:1px solid #d3d3d3;
+    border-bottom:1px solid #d3d3d3;
+
+}
+.prompt{
+    font-size: 12px;
+    color: #666;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: #000;
+    text-decoration: underline;
+}
+/* ----------------------- nav ---------------------- */
+.nav{
+    width: 100%;
+    height: 70px;
+}
+.nav-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-logo{
+    width: 160px;
+    display: flex;
+    align-items: center;
+}
+.nav-logo>a{
+    font-size: 24px;
+    color: white;
+}
+.nav-logo>a:hover{
+    text-decoration: none;
+}
+.nav-item{
+    font-size: 14px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box
+}
+
+.el-menu-item.is-active {
+    border-bottom: 3px solid #c20c0c!important;
+    background-color: rgb(41, 41, 41)!important;
+}
+.search{
+    color: white!important;
+    width: 200px;
+    margin-left: 30px;
+}
+.search input{
+    border-radius: 20px;
+
+}
+.search input:focus{
+    border-color: transparent;
+
+}
+.log{
+    margin: 0 10px 0 10px;
+    width: 120px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.log-or-register{
+
+}
+.log-or-register>a{
+    color: #787878;
+    text-decoration: none;
+}
+.log-or-register>a:hover{
+    color: #666;
+    text-decoration: underline;
+}
+/* ----------------------- login ---------------------- */
+.user{
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.el-dialog__header{
+
+}
+.el-dialog__body{
+    border-top:1px solid #c20c0c;
+    padding: 30px 0 0 0;
+    margin: 0 20px;
+}
+.login-button,.register-button{
+    background-color: #bc070c;
+    border: none;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.login-button{
+    width: 280px;
+}
+.register-button{
+    width: 320px;
+}
+.to-register,.to-login{
+    color: #c20c0c;
+    text-decoration: none;
+
+}
+.to-register:hover,.to-login:hover{
+    text-decoration: underline;
+}
+.dialog-footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-button:hover,.register-button:hover{
+    background-color: #ec2a32;
+    border: none;
+}
+.login-button:focus,.register-button:focus{
+    background-color: #c20c0c;
+    border-color: #c20c0c;
+}
+.el-form-item__content input:focus{
+    border-color: #c20c0c;
+}
+.forget-password,.verification-code{
+    align-self:flex-end ;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.forget-password>a,.verification-code>a{
+    color: #c20c0c;
+    text-decoration: none;
+}
+.forget-password:hover,.verification-code:hover{
+    text-decoration: underline;
+}
+
+/* ----------------------- user ---------------------- */
+.user-wrap{
+    display: flex;
+}
+.u-info{
+    margin-left: 40px;
+    flex: 1;
+}
+.u-name{
+    font-size: 22px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid #d3d3d3;
+}
+.u-count{
+    display: flex;
+    margin: 10px 0 20px 0;
+}
+.u-c-key{
+    font-size: 12px;
+    color: #666;
+}
+.u-c-value{
+    font-size: 24px;
+    color: #666;
+}
+.u-c-likes,.u-c-listen,.u-c-playlist{
+    margin: 10px 30px 10px 0 ;
+    padding-right: 30px;
+}
+.u-c-likes,.u-c-listen{
+    border-right: 1px solid #ddd;
+}
+.u-location{
+    font-size: 12px;
+    color: #666;
+}
+/* ----------------------- songs ---------------------- */
+.songs-title>h3{
+    border-bottom: 2px solid #c20c0c;
+    padding: 10px 0;
+
+}
